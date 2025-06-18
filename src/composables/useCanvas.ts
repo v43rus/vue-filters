@@ -54,5 +54,7 @@ export default function useCanvas() {
     loadImage,
     drawOriginalImage,
     filterImage,
+    originalWidth,
+    originalHeight,
   }
 }
