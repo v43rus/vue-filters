@@ -1,39 +1,67 @@
-# instagram-filters
+# Vue Filters
 
-This template should help get you started developing with Vue 3 in Vite.
+[Live Preview](https://v43rus.github.io/vue-filters/)
 
-## Recommended IDE Setup
+This project is an interactive image filter app built with Vue 3 and Vite. It allows users to upload an image and apply various Instagram-like filters using WebAssembly-powered image processing.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Features
 
-## Type Support for `.vue` Imports in TS
+- **Image Upload:** Drag and drop or select an image from your device.
+- **Filter Effects:** Apply filters such as Oceanic, Vintage, and Rosetint.
+- **Live Preview:** Instantly see the effect of each filter on your image.
+- **Download:** Save the filtered image as a JPEG.
+- **Responsive Design:** Works well on desktop and mobile browsers.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Getting Started
 
-## Customize configuration
+### Prerequisites
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- Node.js (v18 or newer recommended)
+- npm
 
-## Project Setup
+### Installation
 
-```sh
-npm install
-```
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/v43rus/vue-filters.git
+   cd vue-filters
+   ```
 
-### Compile and Hot-Reload for Development
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
 
-```sh
-npm run dev
-```
+3. Start the development server:
+   ```sh
+   npm run dev
+   ```
+   Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
-### Type-Check, Compile and Minify for Production
+### Build for Production
 
+To build the app for production:
 ```sh
 npm run build
 ```
+The build output will be in the `dist/` directory.
 
-### Lint with [ESLint](https://eslint.org/)
+## Usage
 
-```sh
-npm run lint
-```
+- **Upload Image:** Drag and drop an image or click to select one.
+- **Apply Filter:** Click a filter button to apply or remove a filter.
+- **Download:** Click "Download" to save the filtered image.
+- **Upload New Image:** Click "Upload New Image" to start over.
+
+## Deployment
+
+This project is automatically deployed to GitHub Pages on every push to the `master` branch.  
+You can view the live site here: [https://v43rus.github.io/vue-filters/](https://v43rus.github.io/vue-filters/)
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+Made with ❤️ using [Vue 3](https://vuejs.org/)
