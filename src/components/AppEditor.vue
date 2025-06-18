@@ -1,7 +1,7 @@
 <template>
   <div class="my-8">
     <div class="flex justify-center">
-      <canvas ref="canvasElement" :width="originalWidth" :height="originalHeight" class="rounded-lg shadow-2xl"
+      <canvas ref="canvasElement" width="400" height="400" class="rounded-lg shadow-2xl"
         style="width: 90%; height: auto; border: 1px solid #ccc;"></canvas>
     </div>
     <div class="text-white text-xl mt-4 w-[90%] text-center mx-auto">
@@ -21,7 +21,11 @@
         <button
           class="bg-indigo-700 md:text-lg text-sm p-2 mt-4 ml-1 block w-full rounded-lg text-center hover:cursor-pointer"
           type="button" @click="downloadJpeg">
-          Download {{ store.file ? store.file.name.replace(/\.[^/.]+$/, '') + '-filtered.jpg' : 'filtered-image.jpg' }}
+          Download {{
+            store.file && store.file.name
+              ? store.file.name.replace(/\.[^/.]+$/, '') + '-filtered.jpg'
+              : 'filtered-image.jpg'
+          }}
         </button>
       </div>
     </div>
@@ -35,24 +39,37 @@ import useReader from '@/composables/useReader';
 
 const filters = ['oceanic', 'vintage', 'rosetint'];
 const store = useImageStore();
-const { canvasElement, loadImage, drawOriginalImage, filterImage, originalWidth, originalHeight } = useCanvas();
+const { canvasElement, loadImage, filterImage } = useCanvas();
 
 const reader = useReader(store.file, () => {
   if (!reader.result) return;
-
   const dataUrl = reader.result.toString();
   loadImage(dataUrl);
+  store.filter = '';
 });
 
 store.$subscribe((mutation, state) => {
-  drawOriginalImage();
-  if (state.filter) {
-    filterImage(state.filter);
-  } else {
-    drawOriginalImage();
+  if (state.filter && store.file) {
+    // Always reset to the original image before applying a filter
+    const reader = new FileReader();
+    reader.onload = () => {
+      loadImage(reader.result as string);
+      // Wait for the image to load, then apply the filter
+      setTimeout(() => {
+        filterImage(state.filter!);
+      }, 50);
+    };
+    reader.readAsDataURL(store.file);
+  } else if (store.file) {
+    // If no filter, reload the image to reset to original
+    const reader = new FileReader();
+    reader.onload = () => {
+      loadImage(reader.result as string);
+    };
+    reader.readAsDataURL(store.file);
   }
 });
-
+// Function to download the filtered image as JPEG
 function downloadJpeg() {
   if (!canvasElement.value) return
   canvasElement.value.toBlob(

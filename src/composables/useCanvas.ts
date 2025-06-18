@@ -8,53 +8,41 @@ export default function useCanvas() {
   const canvasElement = ref<HTMLCanvasElement | null>(null)
   let canvasContext: CanvasRenderingContext2D | null = null
   const imageElement = new Image()
-  const originalWidth = ref(0)
-  const originalHeight = ref(0)
 
   function loadImage(url: string) {
     if (!canvasElement.value) return
-
     canvasContext = canvasElement.value.getContext('2d')
-
-    imageElement.addEventListener('load', drawOriginalImage)
-
-    imageElement.src = url
-  }
-
-  function drawOriginalImage() {
-    if (!canvasContext || !canvasElement.value) return
-    originalWidth.value = imageElement.naturalWidth
-    originalHeight.value = imageElement.naturalHeight
-
-    canvasElement.value.width = originalWidth.value
-    canvasElement.value.height = originalHeight.value
-
-    canvasContext.drawImage(imageElement, 0, 0, originalWidth.value, originalHeight.value)
+    imageElement.onload = () => {
+      if (!canvasElement.value) return
+      const ctx = canvasElement.value.getContext('2d')
+      if (!ctx) return
+      // Clear the canvas before drawing the new image
+      canvasElement.value.width = imageElement.naturalWidth
+      canvasElement.value.height = imageElement.naturalHeight
+      ctx.drawImage(imageElement, 0, 0, imageElement.naturalWidth, imageElement.naturalHeight)
+    }
+    imageElement.src = ''
+    setTimeout(() => {
+      imageElement.src = url
+    }, 0)
   }
 
   async function filterImage(filterName: string) {
     if (!canvasContext || !canvasElement.value) return
-
     if (!photonReady) {
       photonReady = init()
     }
     await photonReady
-
     const photonImage = open_image(canvasElement.value, canvasContext)
-
     if (filterName.length) {
       filter(photonImage, filterName)
     }
-
     putImageData(canvasElement.value, canvasContext, photonImage)
   }
 
   return {
     canvasElement,
     loadImage,
-    drawOriginalImage,
     filterImage,
-    originalWidth,
-    originalHeight,
   }
 }
