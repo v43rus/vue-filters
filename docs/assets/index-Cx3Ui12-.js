@@ -2879,7 +2879,7 @@ function fc(e, t) {
 }
 async function mi(e) {
   if (T !== void 0) return T;
-  typeof e < "u" && (Object.getPrototypeOf(e) === Object.prototype ? { module_or_path: e } = e : console.warn("using deprecated parameters for the initialization function; pass a single object instead")), typeof e > "u" && (e = new URL("/assets/photon_rs_bg-D290nosJ.wasm", import.meta.url));
+  typeof e < "u" && (Object.getPrototypeOf(e) === Object.prototype ? { module_or_path: e } = e : console.warn("using deprecated parameters for the initialization function; pass a single object instead")), typeof e > "u" && (e = new URL("/vue-filters/assets/photon_rs_bg-D290nosJ.wasm", import.meta.url));
   const t = cc();
   (typeof e == "string" || typeof Request == "function" && e instanceof Request || typeof URL == "function" && e instanceof URL) && (e = fetch(e));
   const { instance: n, module: s } = await lc(await e, t);
