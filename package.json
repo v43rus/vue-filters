@@ -10,7 +10,9 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "predeploy": "npm run build && rm -rf docs && mv dist docs",
+    "deploy": "git add docs && git commit -m 'Deploy to GitHub Pages' || echo 'No changes to commit' && git push"
   },
   "dependencies": {
     "@silvia-odwyer/photon": "^0.3.3",
@@ -41,5 +43,6 @@
     "vite-plugin-fonts": "^0.7.0",
     "vite-plugin-vue-devtools": "^7.7.2",
     "vue-tsc": "^2.2.8"
-  }
+  },
+  "homepage": "https://v43rus.github.io/vue-filters/"
 }
